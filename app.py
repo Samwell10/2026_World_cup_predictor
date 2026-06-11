@@ -62,7 +62,7 @@ st.markdown(f"""
 
 /* ---- header banner ---- */
 .wc-banner {{
-  background: linear-gradient(135deg, {BLUE} 0%, {BLUE} 55%, {GREEN} 100%);
+  background: linear-gradient(135deg, {BLUE} 0%, {RED} 55%, {GREEN} 100%);
   border-radius:16px; padding:22px 28px; margin-bottom:18px;
   box-shadow: 0 4px 18px rgba(42,57,141,0.25);
   position:relative; overflow:hidden;
@@ -104,8 +104,8 @@ st.markdown(f"""
 .mc-bar {{display:flex; height:8px; border-radius:5px; overflow:hidden; margin:10px 0 6px;}}
 .mc-meta {{display:flex; justify-content:space-between; font-size:0.8rem; color:{MUTED};}}
 .mc-fav {{
-  font-size:0.74rem; color:{RED}; font-weight:700; text-transform:uppercase;
-  letter-spacing:.5px; background:rgba(230,29,37,0.08); padding:2px 8px; border-radius:6px;
+  font-size:0.74rem; color:{GREEN}; font-weight:700; text-transform:uppercase;
+  letter-spacing:.5px; background:rgba(60,172,59,0.08); padding:2px 8px; border-radius:6px;
 }}
 </style>
 """, unsafe_allow_html=True)
