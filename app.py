@@ -19,9 +19,10 @@ from scipy.stats import poisson
 
 DATA = Path(__file__).parent / "outputs"
 
-# 2026 tri-host palette (USA / Canada / Mexico): red, blue, green
-RED, BLUE, GREEN = "#E4002B", "#0A3161", "#006341"
-INK, MUTED, LINE, CARD = "#0d1b2a", "#5b6b7d", "#e6e9ee", "#ffffff"
+# Official FIFA World Cup 2026 palette
+GREEN, BLUE, RED = "#3CAC3B", "#2A398D", "#E61D25"
+LINE, INK, CARD = "#D1D4D1", "#474A4A", "#ffffff"
+MUTED = "#7d8080"
 
 @st.cache_data
 def load_model():
@@ -57,25 +58,67 @@ def predict(home, away, neutral):
 st.set_page_config(page_title="2026 World Cup Predictor", page_icon="\u26bd", layout="wide")
 st.markdown(f"""
 <style>
-.block-container {{padding-top: 2rem;}}
+.block-container {{padding-top: 1.5rem; max-width: 1200px;}}
+
+/* ---- header banner ---- */
+.wc-banner {{
+  background: linear-gradient(135deg, {BLUE} 0%, {BLUE} 55%, {GREEN} 100%);
+  border-radius:16px; padding:22px 28px; margin-bottom:18px;
+  box-shadow: 0 4px 18px rgba(42,57,141,0.25);
+  position:relative; overflow:hidden;
+}}
+.wc-banner::after {{
+  content:""; position:absolute; right:0; top:0; bottom:0; width:10px;
+  background: repeating-linear-gradient(180deg, {RED} 0 14px, {GREEN} 14px 28px, {LINE} 28px 42px);
+}}
+.wc-banner h1 {{color:#fff; margin:0; font-size:2rem; font-weight:800; letter-spacing:.5px;}}
+.wc-banner p {{color:#eef0fa; margin:6px 0 0; font-size:0.92rem; opacity:.92;}}
+
+/* ---- tabs ---- */
+.stTabs [data-baseweb="tab-list"] {{gap: 6px;}}
+.stTabs [data-baseweb="tab"] {{
+  background:{CARD}; border:1px solid {LINE}; border-radius:10px 10px 0 0;
+  padding:8px 18px; font-weight:700; color:{INK};
+}}
+.stTabs [aria-selected="true"] {{
+  background:{GREEN}; color:#fff; border-color:{GREEN};
+}}
+
+/* ---- match card ---- */
 .match-card {{
-  background:{CARD}; border:1px solid {LINE}; border-left:6px solid {BLUE};
+  background:{CARD}; border:1px solid {LINE}; border-left:6px solid {GREEN};
   border-radius:12px; padding:14px 18px; margin-bottom:10px;
+  box-shadow: 0 2px 6px rgba(71,74,74,0.06);
+  transition: box-shadow .15s ease, transform .15s ease;
+}}
+.match-card:hover {{
+  box-shadow: 0 4px 14px rgba(42,57,141,0.15); transform: translateY(-1px);
 }}
 .mc-top {{display:flex; align-items:center; justify-content:space-between;}}
-.mc-team {{font-size:1.05rem; font-weight:600; color:{INK}; flex:1;}}
+.mc-team {{font-size:1.05rem; font-weight:700; color:{INK}; flex:1;}}
 .mc-team.away {{text-align:right;}}
-.mc-score {{font-size:1.5rem; font-weight:800; color:{INK}; padding:0 16px; letter-spacing:1px;}}
+.mc-score {{
+  font-size:1.4rem; font-weight:800; color:#fff; padding:4px 14px; letter-spacing:1px;
+  background:{BLUE}; border-radius:8px; margin:0 14px;
+}}
 .mc-bar {{display:flex; height:8px; border-radius:5px; overflow:hidden; margin:10px 0 6px;}}
 .mc-meta {{display:flex; justify-content:space-between; font-size:0.8rem; color:{MUTED};}}
-.mc-fav {{font-size:0.78rem; color:{RED}; font-weight:600;}}
+.mc-fav {{
+  font-size:0.74rem; color:{RED}; font-weight:700; text-transform:uppercase;
+  letter-spacing:.5px; background:rgba(230,29,37,0.08); padding:2px 8px; border-radius:6px;
+}}
 </style>
 """, unsafe_allow_html=True)
 
-st.title("\u26bd 2026 World Cup Predictor")
-st.caption(f"Elo-seeded Poisson goals model + Monte Carlo simulator \u00b7 "
-           f"trained through {manifest['model_data_through']} \u00b7 "
-           f"locked {manifest['generated_at_utc']} \u00b7 {manifest['n_simulations']:,} simulations")
+st.markdown(f"""
+<div class="wc-banner">
+  <h1>\u26bd 2026 FIFA World Cup Predictor</h1>
+  <p>Elo-seeded Poisson goals model + Monte Carlo simulator &middot;
+     trained through {manifest['model_data_through']} &middot;
+     locked {manifest['generated_at_utc']} &middot;
+     {manifest['n_simulations']:,} simulations</p>
+</div>
+""", unsafe_allow_html=True)
 
 tab_odds, tab_board, tab_predict = st.tabs(
     ["\U0001F3C6 Title Odds", "\U0001F4C5 Match Predictions", "\U0001F52E Predict a Match"])
