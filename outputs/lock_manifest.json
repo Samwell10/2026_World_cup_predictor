@@ -1,0 +1,11 @@
+{
+  "generated_at_utc": "2026-06-11 03:34:07 UTC",
+  "model_data_through": "2026-06-09",
+  "n_simulations": 10000,
+  "seed": 42,
+  "model": "from-scratch Elo baseline + Dixon-Coles-corrected Poisson goals model",
+  "locked_artifacts": [
+    "locked_group_predictions.csv",
+    "locked_title_odds.csv"
+  ]
+}
