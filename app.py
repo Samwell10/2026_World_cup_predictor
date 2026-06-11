@@ -27,7 +27,7 @@ INK, MUTED, LINE, CARD = "#0d1b2a", "#5b6b7d", "#e6e9ee", "#ffffff"
 def load_model():
     S = pd.read_csv(DATA / "team_strengths.csv", index_col=0)
     meta = json.load(open(DATA / "_glm_meta.json"))
-    return S["attack"].to_dict(), S["defense"].to_dict(), meta
+    return S["attack"].to_dict(), S["defend"].to_dict(), meta
 
 @st.cache_data
 def load_predictions():
